@@ -26,10 +26,16 @@ function Chatbot() {
       });
 
       const chat = model.startChat({
-        history: messages.map((msg) => ({
-          role: msg.role === "user" ? "user" : "model",
-          parts: [{ text: msg.content }],
-        })),
+        history: [
+          {
+            role: "user",
+            parts: [{ text: prompt }],
+          },
+          ...messages.map((msg) => ({
+            role: msg.role === "user" ? "user" : "model",
+            parts: [{ text: msg.content }],
+          })),
+        ],
         generationConfig: {
           maxOutputTokens: 4000,
           temperature: 0.9,

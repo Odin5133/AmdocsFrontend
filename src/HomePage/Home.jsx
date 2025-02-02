@@ -1,169 +1,209 @@
-import React, { useState } from "react";
+import React from "react";
 import { TypeAnimation } from "react-type-animation";
 import {
   FaCode,
   FaGraduationCap,
   FaChartLine,
   FaUserCheck,
+  FaChevronDown,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-// Components
-const HighlightText = ({ text }) => {
-  return <span className="font-bold text-richblue-200">{text}</span>;
-};
+// Highlight text component
+const HighlightText = ({ text }) => (
+  <span className="font-bold text-yellow-300">{text}</span>
+);
 
-const FeatureCard = ({ icon, title, description, gradient }) => {
-  return (
-    <div
-      className={`flex flex-col items-center p-8 rounded-lg shadow-lg ${gradient} text-white hover:scale-105 transition-transform duration-300`}
-    >
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-2xl font-semibold mb-2">{title}</h3>
-      <p className="text-center">{description}</p>
-    </div>
-  );
-};
+// Feature Card Component with hover scale and shadow
+const FeatureCard = ({ icon, title, description, gradient }) => (
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className={`flex flex-col items-center p-8 rounded-xl shadow-lg ${gradient} text-white`}
+  >
+    <div className="text-5xl mb-4">{icon}</div>
+    <h3 className="text-2xl font-semibold mb-2 text-center">{title}</h3>
+    <p className="text-center text-sm">{description}</p>
+  </motion.div>
+);
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
   return (
-    <div className="w-full overflow-hidden bg-richblack-900 text-white bg-gradient-to-br from-[#0e162f] to-[#1a1f3d]">
+    <div className="w-full overflow-hidden bg-richblack-900 bg-gradient-to-br from-[#0e162f] to-[#1a1f3d] text-white">
       {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-richblack-800 to-richblack-900">
-        <h1 className="text-6xl font-bold text-center mb-4">
+      <section className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-[#0e162f] to-[#1a1f3d] relative">
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl font-bold text-center mb-4 px-4"
+        >
           Welcome to <HighlightText text="PathFinder AI" />
-        </h1>
-        <p className="text-richblack-300 text-lg text-center mb-8 max-w-2xl">
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-richblack-300 text-lg text-center mb-8 max-w-2xl px-4"
+        >
           Your AI-driven Personalized Adaptive Learning (PAL) system that
           creates tailored learning plans to help you achieve your academic and
           career goals.
-        </p>
+        </motion.p>
         <div className="flex gap-4">
           <button
-            className="bg-yellow-50 text-black px-6 py-3 rounded-md font-bold hover:scale-95 transition-all duration-200"
             onClick={() => navigate("/auth?mode=login")}
+            className="bg-yellow-50 text-black px-6 py-3 rounded-md font-bold hover:scale-95 transition transform duration-200"
           >
             Get Started
           </button>
-          <button className="bg-richblack-800 text-white px-6 py-3 rounded-md font-bold hover:scale-95 transition-all duration-200">
-            Learn More
-          </button>
         </div>
-      </div>
+        {/* Scroll Down Indicator */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          className="absolute bottom-10 cursor-pointer"
+          onClick={() =>
+            window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
+          }
+        >
+          <FaChevronDown className="text-3xl text-yellow-300" />
+        </motion.div>
+      </section>
 
       {/* Why Adaptive Learning? */}
-      <div className="py-20 px-8 bg-richblack-800">
-        <h2 className="text-4xl font-bold text-center mb-12">
+      <section className="py-20 px-8 bg-richblack-800">
+        <motion.h2
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
           Why <HighlightText text="Adaptive Learning?" />
-        </h2>
+        </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <FeatureCard
             icon={<FaGraduationCap />}
             title="Personalized Education"
-            description="Traditional one-size-fits-all education fails to address individual learning needs. Adaptive learning tailors content to each learner's pace and style."
+            description="Tailors content to your pace and style."
             gradient="bg-gradient-to-r from-blue-600 to-purple-600"
           />
           <FeatureCard
             icon={<FaChartLine />}
             title="Dynamic Progress Tracking"
-            description="Adaptive systems continuously monitor progress and adjust content to ensure optimal learning outcomes."
+            description="Monitors progress and adjusts content in real-time."
             gradient="bg-gradient-to-r from-green-600 to-teal-600"
           />
           <FeatureCard
             icon={<FaUserCheck />}
             title="Enhanced Engagement"
-            description="Learners stay motivated with personalized feedback, gamification, and interactive content."
+            description="Keeps you motivated with interactive content."
             gradient="bg-gradient-to-r from-orange-600 to-red-600"
           />
         </div>
-      </div>
+      </section>
 
       {/* The Problem */}
-      <div className="py-20 px-8 bg-richblack-900">
-        <h2 className="text-4xl font-bold text-center mb-12">
+      <section className="py-20 px-8 bg-richblack-900">
+        <motion.h2
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
           The <HighlightText text="Problem" />
-        </h2>
+        </motion.h2>
         <div className="max-w-4xl mx-auto text-richblack-300 text-lg">
           <p className="mb-4">
             In today's fast-paced world, learners face several challenges:
           </p>
           <ul className="list-disc list-inside space-y-2">
             <li>
-              <strong>Generic Learning Paths:</strong> Most platforms offer
-              standardized courses that don't account for individual skill
-              levels or goals.
+              <strong>Generic Learning Paths:</strong> Standardized courses
+              don’t fit every learner.
             </li>
             <li>
-              <strong>Lack of Personalization:</strong> Without tailored
-              recommendations, learners waste time on irrelevant content.
+              <strong>Lack of Personalization:</strong> Wasting time on
+              irrelevant content.
             </li>
             <li>
-              <strong>Low Engagement:</strong> Traditional methods often fail to
-              keep learners motivated, leading to high dropout rates.
+              <strong>Low Engagement:</strong> Traditional methods lead to
+              dropout.
             </li>
             <li>
-              <strong>Inefficient Progress Tracking:</strong> Without real-time
-              feedback, learners struggle to identify areas for improvement.
+              <strong>Inefficient Progress Tracking:</strong> Struggle to
+              identify improvement areas.
             </li>
           </ul>
         </div>
-      </div>
+      </section>
 
       {/* The Solution */}
-      <div className="py-20 px-8 bg-richblack-800">
-        <h2 className="text-4xl font-bold text-center mb-12">
+      <section className="py-20 px-8 bg-richblack-800">
+        <motion.h2
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
           The <HighlightText text="Solution" />
-        </h2>
+        </motion.h2>
         <div className="max-w-4xl mx-auto text-richblack-300 text-lg">
           <p className="mb-4">
-            <strong>PathFinder AI</strong> addresses these challenges with:
+            <strong>PathFinder AI</strong> addresses these challenges by
+            offering:
           </p>
           <ul className="list-disc list-inside space-y-2">
             <li>
-              <strong>Personalized Learning Paths:</strong> AI-driven
-              recommendations tailored to your skills, goals, and preferences.
+              <strong>Personalized Learning Paths:</strong> AI-tailored
+              recommendations.
             </li>
             <li>
-              <strong>Adaptive Algorithms:</strong> Dynamic adjustments to your
-              learning path based on performance and feedback.
+              <strong>Adaptive Algorithms:</strong> Dynamically adjust your
+              learning journey.
             </li>
             <li>
-              <strong>Gamified Learning:</strong> Engage with streaks,
-              leaderboards, and badges to stay motivated.
+              <strong>Gamified Learning:</strong> Stay engaged with streaks and
+              badges.
             </li>
             <li>
-              <strong>Real-Time Progress Tracking:</strong> Visual milestones
-              and analytics to monitor your growth.
+              <strong>Real-Time Progress Tracking:</strong> Monitor your growth
+              visually.
             </li>
           </ul>
         </div>
-      </div>
+      </section>
 
-      {/* Implementation Details */}
-      <div className="py-20 px-8 bg-richblack-900">
-        <h2 className="text-4xl font-bold text-center mb-12">
+      {/* How It Works */}
+      <section className="py-20 px-8 bg-richblack-900">
+        <motion.h2
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
           How It <HighlightText text="Works" />
-        </h2>
-        <div className="space-y-12">
+        </motion.h2>
+        <div className="space-y-12 max-w-6xl mx-auto">
           {/* Step 1 */}
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-full md:w-1/2">
               <h3 className="text-3xl font-semibold mb-4">
-                1. User Registration and Profile Setup
+                1. User Registration & Profile Setup
               </h3>
               <p className="text-richblack-300">
-                Users register with their name, email, and upload their Resume,
-                along with links to platforms like LinkedIn, GitHub, and
-                LeetCode. Skills are extracted from their resume and other
-                sources using web scraping to build an initial profile.
+                Register using your details and upload your resume. We extract
+                your skills using web scraping to create a tailored profile.
               </p>
             </div>
             <div className="w-full md:w-1/2 flex justify-center">
-              <div className="bg-richblack-800 p-8 rounded-lg shadow-lg">
+              <div className="bg-richblack-800 p-8 rounded-xl shadow-xl">
                 <TypeAnimation
                   sequence={[
-                    "Upload Resume...",
+                    "Uploading Resume...",
                     1000,
                     "Extracting Skills...",
                     1000,
@@ -172,7 +212,12 @@ const LandingPage = () => {
                   ]}
                   repeat={Infinity}
                   cursor={true}
-                  style={{ whiteSpace: "pre-line", display: "block" }}
+                  style={{
+                    whiteSpace: "pre-line",
+                    display: "block",
+                    fontSize: "1.25rem",
+                    color: "#FBBF24",
+                  }}
                 />
               </div>
             </div>
@@ -181,10 +226,10 @@ const LandingPage = () => {
           {/* Step 2 */}
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-full md:w-1/2 flex justify-center">
-              <div className="bg-richblack-800 p-8 rounded-lg shadow-lg">
+              <div className="bg-richblack-800 p-8 rounded-xl shadow-xl">
                 <TypeAnimation
                   sequence={[
-                    "Define SMART Goals...",
+                    "Defining SMART Goals...",
                     1000,
                     "Analyzing Feasibility...",
                     1000,
@@ -193,19 +238,23 @@ const LandingPage = () => {
                   ]}
                   repeat={Infinity}
                   cursor={true}
-                  style={{ whiteSpace: "pre-line", display: "block" }}
+                  style={{
+                    whiteSpace: "pre-line",
+                    display: "block",
+                    fontSize: "1.25rem",
+                    color: "#FBBF24",
+                  }}
                 />
               </div>
             </div>
             <div className="w-full md:w-1/2">
               <h3 className="text-3xl font-semibold mb-4">
-                2. Goal Setting and Feasibility Analysis
+                2. Goal Setting & Feasibility Analysis
               </h3>
               <p className="text-richblack-300">
-                Users define SMART (Specific, Measurable, Achievable, Relevant,
-                Time-bound) goals, tagged with domains like data science or web
-                development. AI evaluates feasibility based on skill profiles,
-                goal type, and timeline, providing feedback to refine goals.
+                Define SMART goals, tagged with domains like data science or web
+                development. Our AI analyzes feasibility based on your skill
+                profile.
               </p>
             </div>
           </div>
@@ -217,14 +266,12 @@ const LandingPage = () => {
                 3. Personalized Learning Path Recommendation
               </h3>
               <p className="text-richblack-300">
-                Learning paths are divided into Learning Cells, each containing
-                curated resources like courses, videos, articles, and hands-on
-                projects. Practice guidelines and assessment tests are generated
-                using LLaMA and Mistral AI models.
+                Learning paths are divided into cells with curated resources
+                including courses, videos, articles, and hands-on projects.
               </p>
             </div>
             <div className="w-full md:w-1/2 flex justify-center">
-              <div className="bg-richblack-800 p-8 rounded-lg shadow-lg">
+              <div className="bg-richblack-800 p-8 rounded-xl shadow-xl">
                 <TypeAnimation
                   sequence={[
                     "Analyzing Preferences...",
@@ -236,51 +283,61 @@ const LandingPage = () => {
                   ]}
                   repeat={Infinity}
                   cursor={true}
-                  style={{ whiteSpace: "pre-line", display: "block" }}
+                  style={{
+                    whiteSpace: "pre-line",
+                    display: "block",
+                    fontSize: "1.25rem",
+                    color: "#FBBF24",
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Tech Stack Section */}
-      <div className="py-20 px-8 bg-richblack-800">
-        <h2 className="text-4xl font-bold text-center mb-12">
+      {/* Tech Stack */}
+      <section className="py-20 px-8 bg-richblack-800">
+        <motion.h2
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-center mb-12"
+        >
           Our <HighlightText text="Tech Stack" />
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           <FeatureCard
             icon={<FaCode />}
             title="Frontend"
-            description="React.js for responsive UI."
+            description="React.js for a responsive UI."
             gradient="bg-gradient-to-r from-blue-600 to-purple-600"
           />
           <FeatureCard
             icon={<FaCode />}
             title="Backend"
-            description="Django and Django REST Framework (DRF) for API development."
+            description="Django & DRF for robust APIs."
             gradient="bg-gradient-to-r from-green-600 to-teal-600"
           />
           <FeatureCard
             icon={<FaCode />}
             title="Database"
-            description="MySQL for structured data and Qdrant for vector-based recommendations."
+            description="MySQL for structured data & Qdrant for vector search."
             gradient="bg-gradient-to-r from-orange-600 to-red-600"
           />
           <FeatureCard
             icon={<FaCode />}
             title="AI Models"
-            description="LLaMA and Mistral AI for NLP tasks."
+            description="LLaMA & Mistral for cutting-edge NLP."
             gradient="bg-gradient-to-r from-purple-600 to-pink-600"
           />
         </div>
-      </div>
+      </section>
 
       {/* Footer */}
-      <div className="bg-richblack-900 text-white py-8 text-center">
+      <footer className="bg-richblack-900 text-white py-8 text-center">
         <p>© 2023 PathFinder AI. All rights reserved.</p>
-      </div>
+      </footer>
     </div>
   );
 };

@@ -40,16 +40,15 @@ const Sidebar = ({ onNavigate, onLogout }) => {
       </nav>
       <div className="p-4 flex flex-col">
         <NavLink
-          className=" "
           key="edit-profile"
           to="edit-profile"
           className={({ isActive }) =>
             `px-4 py-3 rounded-lg transition-all duration-300
-          ${
-            isActive
-              ? "bg-gray-800 text-purple-400 border-l-4 border-purple-500"
-              : "text-gray-300 hover:bg-gray-800 hover:text-purple-300"
-          }`
+            ${
+              isActive
+                ? "bg-gray-800 text-purple-400 border-l-4 border-purple-500"
+                : "text-gray-300 hover:bg-gray-800 hover:text-purple-300"
+            }`
           }
         >
           Edit Profile

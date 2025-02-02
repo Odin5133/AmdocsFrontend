@@ -82,7 +82,7 @@ const EditProfile = () => {
   if (loading) return <div className="p-4 text-gray-500">Loading...</div>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md max-h-[90vh] overflow-y-scroll">
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">
         Edit Profile
       </h2>

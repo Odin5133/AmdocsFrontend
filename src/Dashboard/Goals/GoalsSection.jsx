@@ -41,7 +41,11 @@ const GoalsSection = () => {
 
   const handleConfirmDelete = () => {
     axios
-      .delete(`http://127.0.0.1:8000/api/goals/${goals[selectedGoal].id}/`)
+      .delete(`http://127.0.0.1:8000/api/goals/${goals[selectedGoal].id}/`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("access")}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         if (deletingGoalIndex !== null) {
@@ -135,6 +139,7 @@ const GoalsSection = () => {
           }
         } else {
           setPreliminaryQuiz(false);
+          setIsLoading(true);
           let formdata1 = new FormData();
           formdata1.append("goal_id", selectedGoal + 1);
           axios
@@ -151,6 +156,7 @@ const GoalsSection = () => {
               // setGoalDetail(res.data.data);
               setGoalDetail(res.data.data);
               setModuleId(res.data.id);
+              setIsLoading(false);
 
               // console.log(res.data.data);
             })
@@ -235,7 +241,8 @@ const GoalsSection = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Be more descriptive in your goal description");
+        if (err.response.status === 400)
+          toast.error("Be more descriptive in your goal description");
       });
   };
 

@@ -42,7 +42,7 @@ function Login({ onSwitch }) {
           sameSite: "Strict",
         });
         toast.success("User Logged In Successfully");
-        navigate("/dashboard/profile", { replace: true });
+        navigate("/dashboard/goals", { replace: true });
         // window.location.href = "https://google.com";
       })
       .catch((error) => {
@@ -69,7 +69,7 @@ function Login({ onSwitch }) {
           className="p-3 rounded-xl border border-gray-300"
           type="text"
           name="email"
-          placeholder="Email"
+          placeholder="Username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
