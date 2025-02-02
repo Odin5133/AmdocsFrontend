@@ -1,0 +1,67 @@
+/* App.css */
+
+/* Set the background color for the entire app */
+body, html {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.5s ease;
+  }
+  
+  /* Add animation to the app */
+  .w-screen {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Keyframes for fade-in effect */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  /* Animation for sidebar */
+  .sidebar {
+    animation: slideIn 0.5s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  /* Add smooth transition for chat messages */
+  .markdown-container {
+    animation: slideUp 0.3s ease-in-out;
+  }
+  
+  @keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Add smooth transition for input area */
+  input, textarea {
+    transition: all 0.3s ease;
+  }
+  
+  textarea:focus {
+    outline: none;
+    border: 1px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
