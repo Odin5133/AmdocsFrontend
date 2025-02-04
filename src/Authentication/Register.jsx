@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IconCircleDashedCheck, IconProgressX } from "@tabler/icons-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Register = ({ onSwitch }) => {
   const [step, setStep] = useState(1);
@@ -125,6 +126,7 @@ const Register = ({ onSwitch }) => {
       })
       .then((res) => {
         console.log(res.data);
+        toast.success("Account created successfully");
         navigate("/auth?mode=login", { replace: true });
       })
       .catch((err) => {
