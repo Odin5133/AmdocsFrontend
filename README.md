@@ -6,7 +6,7 @@ This web application allows users to view a list of profiles and explore their g
 
 Watch the project in action:
 
-[![Project Showcase]](https://youtu.be/OR8KBdPqo6M)
+[![Project Showcase](https://img.youtube.com/vi/OR8KBdPqo6M/0.jpg)](https://youtu.be/OR8KBdPqo6M)
 
 ## Prerequisites
 
@@ -14,15 +14,6 @@ Before you begin, make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (preferably the latest LTS version)
 - npm (comes with Node.js)
-
-Credentials for login to add/edit/delete profiles
-
-```json
-{
-    username:admin,
-    password:admin
-}
-```
 
 ## Project Setup
 
