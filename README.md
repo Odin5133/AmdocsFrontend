@@ -54,7 +54,7 @@ npm run dev
 
 Follow instructions on https://github.com/swarup-2004/Amdocs-GenAI-Hackathon-Backend
 
-### 6. Access the Application
+### 5. Access the Application
 
 Once both the frontend and backend are running, open your browser and go to:
 
