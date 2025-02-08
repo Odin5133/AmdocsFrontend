@@ -101,7 +101,7 @@ const Register = ({ onSwitch }) => {
       username,
       firstName,
       lastName,
-      username,
+      // username,
       linkedin,
       github,
       leetcode,
@@ -124,7 +124,7 @@ const Register = ({ onSwitch }) => {
     formdata.append("city", "Pune");
     formdata.append("college", "India");
     // axios
-    //   .post("http://127.0.0.1:8000/auth/users/", formdata)
+    //   .post("https://amdocs-backend.onrender.com/auth/users/", formdata)
     //   .then((res) => {
     //     //  console.log(res.data);
     //   })
@@ -132,7 +132,7 @@ const Register = ({ onSwitch }) => {
     //     console.log(err);
     //   });
     axios
-      .post("http://127.0.0.1:8000/auth/users/", {
+      .post("https://amdocs-backend.onrender.com/auth/users/", {
         email: email,
         password: password,
         username: username,

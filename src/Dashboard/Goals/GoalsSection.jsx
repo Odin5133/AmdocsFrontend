@@ -43,11 +43,14 @@ const GoalsSection = () => {
 
   const handleConfirmDelete = () => {
     axios
-      .delete(`http://127.0.0.1:8000/api/goals/${goals[selectedGoal].id}/`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("access")}`,
-        },
-      })
+      .delete(
+        `https://amdocs-backend.onrender.com/api/goals/${goals[selectedGoal].id}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("access")}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         if (deletingGoalIndex !== null) {
@@ -82,7 +85,7 @@ const GoalsSection = () => {
     setIsLoading(true);
     axios
       .get(
-        "http://127.0.0.1:8000/api/goals/",
+        "https://amdocs-backend.onrender.com/api/goals/",
 
         {
           headers: {
@@ -128,7 +131,7 @@ const GoalsSection = () => {
     // setIsLoading(true);
     // setLoadx(true);
     axios
-      .post("http://127.0.0.1:8000/api/tests/", formData, {
+      .post("https://amdocs-backend.onrender.com/api/tests/", formData, {
         headers: {
           Authorization: `Bearer ${Cookies.get("access")}`,
         },
@@ -148,7 +151,7 @@ const GoalsSection = () => {
           let formdata1 = new FormData();
           formdata1.append("goal_id", selectedGoal + 1);
           axios
-            .get("http://127.0.0.1:8000/api/learning-modules/", {
+            .get("https://amdocs-backend.onrender.com/api/learning-modules/", {
               params: {
                 goal_id: goals[selectedGoal].id,
               },
@@ -187,7 +190,7 @@ const GoalsSection = () => {
     // console.log(info);
     axios
       .post(
-        "http://127.0.0.1:8000/api/tests/",
+        "https://amdocs-backend.onrender.com/api/tests/",
         {
           goal_id: goals[selectedGoal].id,
           module_info: "Preliminary Test",
@@ -220,7 +223,7 @@ const GoalsSection = () => {
     newGoal.duration_months = newGoal.months;
     newGoal.duration_days = newGoal.days;
     axios
-      .post("http://127.0.0.1:8000/api/goals/", newGoal, {
+      .post("https://amdocs-backend.onrender.com/api/goals/", newGoal, {
         headers: {
           Authorization: `Bearer ${Cookies.get("access")}`,
         },
@@ -231,7 +234,7 @@ const GoalsSection = () => {
         setLoadx(true);
         axios
           .get(
-            "http://127.0.0.1:8000/api/goals/",
+            "https://amdocs-backend.onrender.com/api/goals/",
 
             {
               headers: {

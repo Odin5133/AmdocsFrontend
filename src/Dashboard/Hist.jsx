@@ -8,7 +8,7 @@ function Hist() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/scores/", {
+      .get("https://amdocs-backend.onrender.com/api/scores/", {
         headers: {
           Authorization: `Bearer ${Cookies.get("access")}`,
         },

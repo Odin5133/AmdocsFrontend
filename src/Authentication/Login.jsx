@@ -29,7 +29,7 @@ function Login({ onSwitch }) {
     }
     console.log(import.meta.env.GUEST_USERNAME, password);
     axios
-      .post("http://127.0.0.1:8000/auth/jwt/create", formData)
+      .post("https://amdocs-backend.onrender.com/auth/jwt/create", formData)
       .then((response) => {
         console.log(response);
         Cookies.set("access", response.data.access, {

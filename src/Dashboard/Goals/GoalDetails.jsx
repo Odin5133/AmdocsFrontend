@@ -17,7 +17,7 @@ const GoalDetails = ({ goal, goalDetail, selectedGoal, moduleId }) => {
     setIsLoading(true);
     axios
       .post(
-        "http://127.0.0.1:8000/api/tests/",
+        "https://amdocs-backend.onrender.com/api/tests/",
         {
           goal_id: goal.id,
           module_info: info,

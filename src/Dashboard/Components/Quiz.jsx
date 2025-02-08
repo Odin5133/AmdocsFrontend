@@ -17,6 +17,8 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [quizCompleteTime, setQuizCompleteTime] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [rightFluency, setRightFluency] = useState(0);
+  const [wrongFluency, setWrongFluency] = useState(0);
   const timeoutRef = useRef(null);
   const navigate = useNavigate();
 
@@ -53,19 +55,28 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       setShowFeedback(false);
       setIsTransitioning(false);
 
-      if (currentQuestion < questions.length - 1) {
+      if (currentQuestion + 1 < questions.length - 1) {
+        // console.log(currentQuestion + 1, questions.length);
         setCurrentQuestion(currentQuestion + 1);
+        // setCurrentQuestion(questions.length - 1);
+
         setQuestionStartTime(Date.now());
       } else {
+        // console.log(currentQuestion + 1, questions.length);
+
         setQuizCompleted(true);
       }
     }, 10);
   };
 
+  useEffect(() => {
+    console.log(currentQuestion, questions.length);
+  }, [currentQuestion]);
+
   const getButtonColor = (choice) => {
     if (!showFeedback) return "";
 
-    const correctAnswer = questions[currentQuestion].correct_answer;
+    const correctAnswer = questions[currentQuestion].correctAnswer;
     const userAnswer = selectedAnswers[currentQuestion];
 
     if (choice === correctAnswer) {
@@ -83,14 +94,16 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
     let correctTime = 0;
     let wrongTime = 0;
     questions.forEach((q, index) => {
-      if (selectedAnswers[index] === q.correct_answer) {
+      // console.log(questionTimes[index]);
+      if (selectedAnswers[index] === q.correctAnswer) {
         correct++;
-        correctTime += questionTimes[index];
+        correctTime += questionTimes[index] || 0;
       } else {
         wrong++;
-        wrongTime += questionTimes[index];
+        wrongTime += questionTimes[index] || 0;
       }
     });
+    // console.log(correct, wrong, correctTime, wrongTime);
     return { correct, wrong, correctTime, wrongTime };
   };
 
@@ -102,20 +115,24 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
 
   useEffect(() => {
     setQuizCompleteTime(timeElapsed);
+    // setRightFluency()
   }, [quizCompleted]);
 
   const handleSubmitQuiz = async (correct, wrong, correctTime, wrongTime) => {
     setIsLoading(true);
     //calculate right fluency
+    console.log(correct, quizCompleteTime, correctTime, questions.length);
+    console.log(wrong, quizCompleteTime, wrongTime, questions.length);
+
     const right_fluency =
-      correctTime === 0
+      correctTime === 0 || isNaN(correctTime)
         ? 0
         : Math.round(
             (correct * quizCompleteTime) / (correctTime * questions.length)
           );
 
     const wrong_fluency =
-      wrongTime === 0
+      wrongTime === 0 || isNaN(wrongTime)
         ? 0
         : Math.round(
             (wrong * quizCompleteTime) / (wrongTime * questions.length)
@@ -128,8 +145,12 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
     formdata.append("test_id", submitId);
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/scores/",
-        formdata,
+        "https://amdocs-backend.onrender.com/api/scores/",
+        {
+          right_fluency: right_fluency,
+          wrong_fluency: wrong_fluency,
+          test_id: submitId,
+        },
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("access")}`,
@@ -145,7 +166,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       if (typeOf === "A")
         axios
           .post(
-            "http://127.0.0.1:8000/api/learning-modules/",
+            "https://amdocs-backend.onrender.com/api/learning-modules/",
             {
               goal_id: goal_id,
             },
@@ -169,7 +190,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       else {
         axios
           .patch(
-            `http://127.0.0.1:8000/api/learning-modules/${module}/`,
+            `https://amdocs-backend.onrender.com/api/learning-modules/${module}/`,
             {},
             {
               headers: {
@@ -197,6 +218,13 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       // return () => clearTimeout(timeoutId);
     }
   };
+
+  useEffect(() => {
+    console.log(quizCompleted);
+  }, [quizCompleted]);
+
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const currentQ = questions[currentQuestion];
 
   if (quizCompleted) {
     const { correct, wrong, correctTime, wrongTime } = calculateResults();
@@ -285,8 +313,9 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
     );
   }
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
-  const currentQ = questions[currentQuestion];
+  // useEffect(() => {
+  //   console.log(currentQ);
+  // }, [currentQ]);
 
   if (questions.length === 0) {
     return <div>No questions available</div>;
@@ -303,7 +332,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
           </div>
           <div className="flex items-center">
             <FiStar className="mr-2" />
-            <span>{currentQ.difficulty_tier}</span>
+            <span>{currentQ.difficultyTier}</span>
           </div>
         </div>
         <div className="w-40 bg-gray-200 rounded-full h-2.5">
@@ -318,11 +347,11 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       <div className="flex flex-wrap gap-2 mb-6">
         <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
           <FiBook className="mr-2" />
-          {currentQ.skill_tested}
+          {currentQ.skillTested}
         </div>
         <div className="flex items-center bg-purple-100 text-purple-800 px-3 py-1 rounded-full">
           <FiInfo className="mr-2" />
-          {currentQ.question_type}
+          {currentQ.questionType}
         </div>
       </div>
 
@@ -347,10 +376,10 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
               className={`w-full p-4 text-left rounded-lg border transition-all
       ${
         selectedAnswers[currentQuestion] === option
-          ? option === currentQ.correct_answer
+          ? option === currentQ.correctAnswer
             ? "bg-green-100 border-green-500"
             : "bg-red-100 border-red-500"
-          : showFeedback && option === currentQ.correct_answer
+          : showFeedback && option === currentQ.correctAnswer
           ? "bg-green-100 border-green-500"
           : "border-gray-200 hover:border-blue-300"
       }
@@ -386,7 +415,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
                 <FiInfo className="mr-2" />
                 <span className="font-semibold">Objective</span>
               </div>
-              <p className="text-gray-700">{currentQ.diagnostic_insight}</p>
+              <p className="text-gray-700">{currentQ.diagnosticInsight}</p>
             </motion.div>
           }
         </AnimatePresence>
