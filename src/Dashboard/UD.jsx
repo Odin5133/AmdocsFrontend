@@ -110,12 +110,12 @@ function UD() {
   }, [questions]);
 
   return (
-    <div className="h-full w-full rounded-xl flex items-center justify-center bg-gray-50">
+    <div className="md:h-full min-h-[87vh] w-full rounded-xl flex items-center justify-center bg-gray-50">
       {!testStarted ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-4"
+          className="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-4 "
         >
           <div className="text-center mb-8">
             <FiLock className="text-4xl text-red-600 mx-auto mb-4" />

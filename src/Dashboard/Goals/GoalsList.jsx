@@ -74,11 +74,7 @@ const GoalsList = ({
           <div className="flex items-center justify-between">
             {/* Circular Progress */}
             <div className="relative w-12 h-12 mr-4">
-              {/* <div className="absolute inset-0 flex items-center justify-center">
-                <FaRegCheckCircle className="text-3xl text-blue-600" />
-              </div> */}
               <span className="absolute inset-0 flex items-center justify-center text-xs font-bold">
-                {/* {goal.progress}% */}
                 <CircularProgressbar
                   value={goal.progress}
                   text={`${goal.progress}%`}
@@ -88,9 +84,6 @@ const GoalsList = ({
 
             <div>
               <h3 className="font-semibold text-gray-800">{goal.title}</h3>
-              {/* <p className="text-sm text-gray-500 mt-1">
-                Current: {goal.currentModule}
-              </p> */}
             </div>
             <div className="relative">
               <button

@@ -229,7 +229,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   if (quizCompleted) {
     const { correct, wrong, correctTime, wrongTime } = calculateResults();
     return (
-      <div className="md:w-full h-full px-6 md:px-12 max-h-[90vh] overflow-y-scroll">
+      <div className="md:w-full md:h-full my-6 md:mt-0 px-6 md:px-12 md:max-h-[90vh] md:overflow-y-scroll">
         {isLoading ? (
           <LoadingAnimation />
         ) : (

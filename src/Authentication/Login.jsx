@@ -17,18 +17,17 @@ function Login({ onSwitch }) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email, password);
+
+  const logind = (isGuest) => {
     const formData = new FormData();
-    formData.append("username", email);
-    formData.append("password", password);
-    console.log(email, password);
-    // axios
-    //   .post("https://amdocs-backend.onrender.com/auth/jwt/create", {
-    //     username: email,
-    //     password: password,
-    //   })
+    if (!isGuest) {
+      formData.append("username", email);
+      formData.append("password", password);
+    } else {
+      formData.append("username", import.meta.env.VITE_GUEST_USERNAME);
+      formData.append("password", import.meta.env.VITE_GUEST_PASSWORD);
+    }
+    console.log(import.meta.env.GUEST_USERNAME, password);
     axios
       .post("https://amdocs-backend.onrender.com/auth/jwt/create", formData)
       .then((response) => {
@@ -43,7 +42,6 @@ function Login({ onSwitch }) {
         });
         toast.success("User Logged In Successfully");
         navigate("/dashboard/goals", { replace: true });
-        // window.location.href = "https://google.com";
       })
       .catch((error) => {
         console.log(error);
@@ -57,6 +55,18 @@ function Login({ onSwitch }) {
         setPassword("");
       });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password);
+    logind();
+  };
+
+  const handleGuestLogin = () => {
+    // Implement guest login logic here
+    logind(1);
+  };
+
   return (
     <div className="md:w-1/2 px-6 md:px-12">
       <h2 className="font-bold text-3xl text-gray-800">Login</h2>
@@ -111,7 +121,7 @@ function Login({ onSwitch }) {
         </div>
         <button
           type="submit"
-          className="bg-blue-600 rounded-xl text-white py-3 hover:scale-105 duration-300"
+          className="bg-gradient-to-r from-purple-400 to-purple-500 rounded-xl text-white py-3 duration-300 shadow-lg transform hover:scale-101  "
         >
           Login
         </button>
@@ -122,11 +132,18 @@ function Login({ onSwitch }) {
           Forgot your password?
         </a>
       </div>
-
+      <div className="mt-3 text-xs flex justify-center w-full items-center text-gray-600">
+        <button
+          className="py-3 px-5 w-full bg-gradient-to-r from-gray-400 to-gray-600 text-white border rounded-xl hover:from-gray-500 hover:to-gray-700 duration-300 shadow-lg transform hover:scale-101"
+          onClick={handleGuestLogin}
+        >
+          Sign In as Guest
+        </button>
+      </div>
       <div className="mt-3 text-xs flex justify-between items-center text-gray-600">
         <p>Don't have an account?</p>
         <button
-          className="py-2 px-5 bg-gray-100 border rounded-xl hover:bg-blue-600 hover:text-white duration-300"
+          className="py-2 px-5 bg-gray-100 border rounded-xl hover:bg-gray-500 hover:text-white duration-300"
           onClick={handleSwitchToRegister}
         >
           Register
