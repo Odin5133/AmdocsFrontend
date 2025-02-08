@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IconCircleDashedCheck, IconProgressX } from "@tabler/icons-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Register = ({ onSwitch }) => {
   const [step, setStep] = useState(1);
@@ -28,6 +29,14 @@ const Register = ({ onSwitch }) => {
     lastName: false,
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (step === 4) {
+      setLinkedin(addMissingHTTPStoURL(linkedin));
+      setGithub(addMissingHTTPStoURL(github));
+      setLeetcode(addMissingHTTPStoURL(leetcode));
+    }
+  }, [step]);
 
   const handleSwitchToLogin = () => {
     navigate("/auth?mode=login", { replace: true });
@@ -76,6 +85,14 @@ const Register = ({ onSwitch }) => {
     console.log(errors);
   }, [errors]);
 
+  const addMissingHTTPStoURL = (url) => {
+    if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
+      console.log("Adding https:// to", url);
+      return `https://${url}`;
+    }
+    return url;
+  };
+
   const handleCreateAccount = () => {
     // Add your form submission logic here
     console.log("Creating account with:", {
@@ -90,6 +107,7 @@ const Register = ({ onSwitch }) => {
       leetcode,
       resume,
     });
+
     let formdata = new FormData();
     formdata.append("email", email);
     formdata.append("password", password);
@@ -97,7 +115,10 @@ const Register = ({ onSwitch }) => {
     formdata.append("first_name", firstName);
     formdata.append("last_name", lastName);
     //if linkedin is empty, appened temp.com
-    formdata.append("linkedin_url", linkedin || "");
+    formdata.append(
+      "linkedin_url",
+      linkedin ? addMissingHTTPStoURL(linkedin) : ""
+    );
     formdata.append("github_url", github || "");
     formdata.append("leetcode_url", leetcode || "");
     formdata.append("city", "Pune");
@@ -125,10 +146,17 @@ const Register = ({ onSwitch }) => {
       })
       .then((res) => {
         console.log(res.data);
+        toast.success(
+          "Account created successfully. Please activate account via email sent before logging in.",
+          {
+            duration: 6000,
+          }
+        );
         navigate("/auth?mode=login", { replace: true });
       })
       .catch((err) => {
         console.log(err);
+        toast.error("An error occurred. Please try again.");
       });
   };
 
@@ -316,6 +344,7 @@ const Register = ({ onSwitch }) => {
       case 4: // Step 4: Resume Upload
         return (
           <>
+            <p className="text-sm text-gray-600"> Upload your resume (PDF)</p>
             <input
               className="p-3 rounded-xl border border-gray-300 w-full"
               type="file"

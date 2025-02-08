@@ -22,6 +22,7 @@ const GoalsSection = () => {
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [moduleId, setModuleId] = useState(4);
+  const [loadx, setLoadx] = useState(false);
 
   const [goals, setGoals] = useState([
     {
@@ -77,6 +78,7 @@ const GoalsSection = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         "http://127.0.0.1:8000/api/goals/",
@@ -106,7 +108,8 @@ const GoalsSection = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
@@ -121,7 +124,8 @@ const GoalsSection = () => {
     formData.append("goal_id", goals[selectedGoal].id);
     formData.append("module_info", "Preliminary Test");
     console.log(formData, curGoalId);
-
+    // setIsLoading(true);
+    // setLoadx(true);
     axios
       .post("http://127.0.0.1:8000/api/tests/", formData, {
         headers: {
@@ -167,6 +171,10 @@ const GoalsSection = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        // setLoadx(false);
       });
 
     // });
@@ -218,16 +226,56 @@ const GoalsSection = () => {
       })
       .then((res) => {
         console.log(res.data);
-        const newGoalEntry = {
-          id: goals.length + 1,
-          title: newGoal.title,
-          progress: 0,
-          currentModule: "Not started",
-          ...newGoal,
-        };
-        setGoals([...goals, newGoalEntry]);
-        setSelectedGoal(goals.length);
-        setPreliminaryQuiz(true);
+        setIsLoading(true);
+        setLoadx(true);
+        axios
+          .get(
+            "http://127.0.0.1:8000/api/goals/",
+
+            {
+              headers: {
+                Authorization: `Bearer ${Cookies.get("access")}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data.results);
+            // setGoals(res.data.results);
+            // for each goal add random progress between 0 and 100 and currentmodule=""
+            res.data.results.forEach((goal) => {
+              goal.progress = Math.floor(Math.random() * 100);
+              goal.currentModule = `Module ${
+                Math.floor(Math.random() * 5) + 1
+              }`;
+            });
+            setGoals(res.data.results);
+            if (res.data.results.length > 0) {
+              setSelectedGoal(0);
+              setCurGoalId(res.data.results[0].id);
+            } else {
+              setSelectedGoal(-1);
+              setCurGoalId(-1);
+            }
+            // setSelectedGoal(goals.length);
+            // setPreliminaryQuiz(true);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            setLoadx(false);
+          });
+        // console.log(res.data);
+        // const newGoalEntry = {
+        //   id: goals.length + 1,
+        //   title: newGoal.title,
+        //   progress: 0,
+        //   currentModule: "Not started",
+        //   ...newGoal,
+        // };
+        // setGoals([...goals, newGoalEntry]);
+
         // if (res.data.data.is_attempted === false) {
         //   setPreliminaryQuiz(true);
         //   if (res.data.questions) {
@@ -278,18 +326,25 @@ const GoalsSection = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {isLoading && <LoadingAnimation textToDisplay="Starting Quiz" />}
-            <h2 className="text-3xl font-semibold text-blue-800">
-              Preliminary Quiz
-            </h2>
-            <motion.button
-              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleTest}
-            >
-              Start Test
-            </motion.button>
+            {isLoading ? (
+              <LoadingAnimation
+                textToDisplay={loadx ? `Loading` : `Starting Quiz`}
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center">
+                <h2 className="text-3xl font-semibold text-blue-800">
+                  Preliminary Quiz
+                </h2>
+                <motion.button
+                  className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={handleTest}
+                >
+                  Start Test
+                </motion.button>
+              </div>
+            )}
           </motion.div>
         ) : selectedGoal === -1 ? (
           <div className="h-full bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center">

@@ -31,7 +31,7 @@ const GoalDetails = ({ goal, goalDetail, selectedGoal, moduleId }) => {
       .then((res) => {
         setIsLoading(false);
         navigate(
-          `/dashboard/quiz/${res.data.data.id}/${goal.id}/B/4/${moduleId}`
+          `/dashboard/quiz/${res.data.data.id}/${goal.id}/B/${moduleId}`
         );
       })
       .catch((err) => {
