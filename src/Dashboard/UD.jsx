@@ -34,9 +34,29 @@ function UD() {
     }
   }, [testStarted]);
 
+  const toCamelCase = (str) => {
+    return str.replace(/([-_][a-z])/gi, (match) =>
+      match.toUpperCase().replace("-", "").replace("_", "")
+    );
+  };
+
+  const keysToCamelCase = (obj) => {
+    if (obj === null || obj === undefined) return obj;
+    if (Array.isArray(obj)) {
+      return obj.map((v) => keysToCamelCase(v));
+    } else if (typeof obj === "object") {
+      return Object.keys(obj).reduce((result, key) => {
+        const camelCaseKey = toCamelCase(key);
+        result[camelCaseKey] = keysToCamelCase(obj[key]);
+        return result;
+      }, {});
+    }
+    return obj;
+  };
+
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/tests/${test_id}`, {
+      .get(`https://amdocs-backend.onrender.com/api/tests/${test_id}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("access")}`,
         },
@@ -44,33 +64,38 @@ function UD() {
       .then((res) => {
         console.log(res.data);
         // res.data.data.questions && setQuestions(res.data.data.questions);
-        res.data.id && setSubmitId(res.data.id);
-        // if questions correct answer==1 or a map it to the first option
-        const normalizedQuestions =
-          res.data.data.questions &&
-          res.data.data.questions.map((q) => {
-            let { correct_answer, options } = q;
 
-            if (typeof correct_answer === "string") {
-              if (correct_answer >= "a" && correct_answer <= "d") {
-                correct_answer = correct_answer.charCodeAt(0) - 97; // Convert 'a' to 0, 'b' to 1, etc.
-              } else if (correct_answer >= "A" && correct_answer <= "D") {
-                correct_answer = correct_answer.charCodeAt(0) - 65; // Convert 'A' to 0, 'B' to 1, etc.
+        const data = keysToCamelCase(res.data);
+        data.id && setSubmitId(data.id);
+        // if questions correct answer==1 or a map it to the first option
+
+        const normalizedQuestions =
+          data.data.questions &&
+          data.data.questions.map((q) => {
+            let { correctAnswer, options } = q;
+
+            if (typeof correctAnswer === "string") {
+              if (correctAnswer >= "a" && correctAnswer <= "d") {
+                correctAnswer = correctAnswer.charCodeAt(0) - 97; // Convert 'a' to 0, 'b' to 1, etc.
+              } else if (correctAnswer >= "A" && correctAnswer <= "D") {
+                correctAnswer = correctAnswer.charCodeAt(0) - 65; // Convert 'A' to 0, 'B' to 1, etc.
               }
             } else if (
-              typeof correct_answer === "number" &&
-              correct_answer >= 1 &&
-              correct_answer <= 4
+              typeof correctAnswer === "number" &&
+              correctAnswer >= 1 &&
+              correctAnswer <= 4
             ) {
-              correct_answer -= 1; // Convert 1-based index to 0-based
+              correctAnswer -= 1; // Convert 1-based index to 0-based
             }
+
+            console.log(correctAnswer);
 
             // Ensure correct_answer is a valid index
-            if (correct_answer >= 0 && correct_answer < options.length) {
-              correct_answer = options[correct_answer];
+            if (correctAnswer >= 0 && correctAnswer < options.length) {
+              correctAnswer = options[correctAnswer];
             }
 
-            return { ...q, correct_answer };
+            return { ...q, correctAnswer };
           });
         setQuestions(normalizedQuestions);
       })
@@ -79,11 +104,10 @@ function UD() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(questions);
-  //   // if questions correct answer==1 or a map it to the first option
-
-  // }, [questions]);
+  useEffect(() => {
+    console.log(questions);
+    // if questions correct answer==1 or a map it to the first option
+  }, [questions]);
 
   return (
     <div className="h-full w-full rounded-xl flex items-center justify-center bg-gray-50">

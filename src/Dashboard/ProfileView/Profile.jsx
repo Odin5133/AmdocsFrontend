@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/auth/users/me",
+          "https://amdocs-backend.onrender.com/auth/users/me",
           {
             headers: {
               Authorization: `Bearer ${Cookies.get("access")}`,

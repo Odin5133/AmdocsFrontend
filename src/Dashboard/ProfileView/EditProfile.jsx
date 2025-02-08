@@ -20,7 +20,7 @@ const EditProfile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/auth/users/me",
+          "https://amdocs-backend.onrender.com/auth/users/me",
           {
             headers: {
               Authorization: `Bearer ${Cookies.get("access")}`,
@@ -61,7 +61,7 @@ const EditProfile = () => {
         }
 
         await axios.put(
-          "http://127.0.0.1:8000/auth/users/me/",
+          "https://amdocs-backend.onrender.com/auth/users/me/",
           formattedValues,
           {
             headers: {

@@ -35,11 +35,14 @@ function CourseRecommendation() {
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/goals/", {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access")}`,
-          },
-        });
+        const response = await axios.get(
+          "https://amdocs-backend.onrender.com/api/goals/",
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("access")}`,
+            },
+          }
+        );
         setGoals(response.data.results);
       } catch (error) {
         setError("Failed to fetch goals. Please try again later.");
@@ -63,7 +66,7 @@ function CourseRecommendation() {
 
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/recommendations/",
+        "https://amdocs-backend.onrender.com/api/recommendations/",
         {
           params: { goal_id: selectedGoal },
           headers: {
