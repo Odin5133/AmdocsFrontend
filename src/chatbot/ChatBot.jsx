@@ -97,7 +97,7 @@ function Chatbot() {
   };
 
   return (
-    <div className="flex flex-col h-full max-w-1300xl mx-auto bg-white border border-black shadow-lg rounded-xl p-6">
+    <div className="flex flex-col md:h-[92vh] md:w-[1300px] md:my-5 mx-auto bg-white border border-black shadow-lg rounded-xl p-6 h-[87vh] ">
       <div className="text-center text-xl font-semibold text-gray-700 mb-4">
         Ask me Anything
       </div>

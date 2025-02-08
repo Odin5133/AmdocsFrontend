@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import NewGoalModal from "../Components/NewGoalModal";
 import EditGoalModal from "../Components/EditGoalModal";
 import DeleteConfirmationModal from "../Components/DeleteConfirmationModal";
+import GoalsPillList from "./GoalsPillList";
 import { GiGhost, GiDirectionSigns } from "react-icons/gi";
 import toast from "react-hot-toast";
 import LoadingAnimation from "../Components/LoadingAnimation";
@@ -300,7 +301,7 @@ const GoalsSection = () => {
   }, [goalDetail]);
 
   return (
-    <div className="flex  gap-6">
+    <div className="flex flex-col md:flex-row gap-6">
       <NewGoalModal
         isOpen={showNewGoalModal}
         onClose={() => setShowNewGoalModal(false)}
@@ -318,10 +319,20 @@ const GoalsSection = () => {
         onConfirm={handleConfirmDelete}
       />
       {/* Section 1 - Goal Details */}
-      <div className="w-[60%] h-[90vh]">
+      <div className="md:hidden block mt-4">
+        <GoalsPillList
+          goals={goals}
+          onSelect={setSelectedGoal}
+          onDelete={handleDeleteInit}
+          onEdit={handleEditGoal}
+          selectedGoal={selectedGoal}
+          onAddNew={() => setShowNewGoalModal(true)}
+        />
+      </div>
+      <div className="mt-4 md:mt-0 w-full md:px-4 md:w-[60%] md:h-[90vh]">
         {PreliminaryQuiz ? (
           <motion.div
-            className="h-full bg-blue-100 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center"
+            className=" bg-blue-100 rounded-2xl shadow-lg md:mx-0 mx-2 p-6 flex flex-col items-center justify-center md:w-[60%] md:h-[90vh] min-h-[75vh]"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -332,7 +343,7 @@ const GoalsSection = () => {
               />
             ) : (
               <div className="flex flex-col items-center justify-center">
-                <h2 className="text-3xl font-semibold text-blue-800">
+                <h2 className="text-3xl font-semibold text-blue-800  ">
                   Preliminary Quiz
                 </h2>
                 <motion.button
@@ -366,30 +377,31 @@ const GoalsSection = () => {
               moduleId={moduleId}
             />
           )
-          // <div>hello</div>
         )}
       </div>
 
       {/* Sections 2 & 3 */}
-      <div className="w-[40%] flex flex-col gap-6 max-h-[90vh] min-h-[80vh]">
+      <div className="w-full md:w-[40%] flex flex-col gap-6 max-h-[90vh] md:min-h-[80vh]">
         <motion.div
           className="h-[60%] overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <GoalsList
-            goals={goals}
-            onSelect={setSelectedGoal}
-            onDelete={handleDeleteInit}
-            onEdit={handleEditGoal}
-            selectedGoal={selectedGoal}
-            onAddNew={() => setShowNewGoalModal(true)}
-          />
+          <div className="hidden md:block">
+            <GoalsList
+              goals={goals}
+              onSelect={setSelectedGoal}
+              onDelete={handleDeleteInit}
+              onEdit={handleEditGoal}
+              selectedGoal={selectedGoal}
+              onAddNew={() => setShowNewGoalModal(true)}
+            />
+          </div>
         </motion.div>
 
         <motion.div
-          className="h-[40%] w-full "
+          className="h-[40%] w-full hidden md:block"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}

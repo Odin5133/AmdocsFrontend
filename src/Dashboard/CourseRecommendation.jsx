@@ -122,8 +122,8 @@ function CourseRecommendation() {
   }
 
   return (
-    <div className="max-h-[90vh] overflow-y-scroll">
-      <div className="min-h-screen p-8 max-w-4xl mx-auto flex flex-col">
+    <div className="md:max-h-[90vh] w-full md:overflow-y-scroll">
+      <div className="min-h-screen md:p-8 max-w-4xl mx-auto flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ function CourseRecommendation() {
               <label className="block text-lg font-medium text-gray-700">
                 Select a Learning Goal
               </label>
-              <div className="grid gap-4 max-h-[20rem] overflow-y-auto">
+              <div className="grid gap-4 max-h-[20rem] md:overflow-y-auto">
                 {goals.map((goal) => (
                   <motion.div
                     key={goal.id}

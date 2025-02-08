@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const LoadingAnimation = ({ textToDisplay = "Updating Goals..." }) => {
   return (
     // <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50">
-    <div className="h-full w-full flex items-center justify-center bg-white bg-opacity-50 z-50 rounded-xl ">
+    <div className="md:h-full h-[75vh] w-full flex items-center justify-center bg-white bg-opacity-50 z-50 rounded-xl ">
       <motion.div
         className="relative w-64 h-64"
         initial={{ opacity: 0 }}

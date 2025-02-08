@@ -40,11 +40,19 @@ const GoalDetails = ({ goal, goalDetail, selectedGoal, moduleId }) => {
       });
   };
 
+  if (isLoading) {
+    return (
+      <div className="md:h-full h-[75vh] bg-white rounded-2xl shadow-lg p-6 flex flex-col">
+        {isLoading && <LoadingAnimation textToDisplay="Starting Quiz" />}
+      </div>
+    );
+  }
+
   return (
     <div className="h-full bg-white rounded-2xl shadow-lg p-6 flex flex-col">
       {isLoading && <LoadingAnimation textToDisplay="Starting Quiz" />}
       {!isLoading && (
-        <div className="h-[30vh] bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-8">
+        <div className="h-[30vh] bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl items-center justify-center mb-8 md:flex hidden">
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -54,7 +62,7 @@ const GoalDetails = ({ goal, goalDetail, selectedGoal, moduleId }) => {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto space-y-6">
+      <div className="flex-1 md:overflow-y-auto space-y-6">
         <h2 className="text-2xl font-semibold text-gray-800">Modules</h2>
 
         {/* Topics List */}

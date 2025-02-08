@@ -29,7 +29,7 @@ const QuizHistory = ({ scores }) => {
           return (
             <motion.div
               key={score.id}
-              className="group relative p-6 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-400/30 transition-all duration-300 backdrop-blur-sm"
+              className="group relative p-6 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-400/30 transition-all duration-300 backdrop-blur-sm md:w-[62vw]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
