@@ -124,7 +124,8 @@ const GoalsSection = () => {
     formData.append("goal_id", goals[selectedGoal].id);
     formData.append("module_info", "Preliminary Test");
     console.log(formData, curGoalId);
-    setIsLoading(true);
+    // setIsLoading(true);
+    // setLoadx(true);
     axios
       .post("http://127.0.0.1:8000/api/tests/", formData, {
         headers: {
@@ -171,7 +172,10 @@ const GoalsSection = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        // setLoadx(false);
+      });
 
     // });
   }, [selectedGoal]);
@@ -221,6 +225,7 @@ const GoalsSection = () => {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setIsLoading(true);
         setLoadx(true);
         axios
@@ -251,7 +256,7 @@ const GoalsSection = () => {
               setSelectedGoal(-1);
               setCurGoalId(-1);
             }
-            setSelectedGoal(goals.length);
+            // setSelectedGoal(goals.length);
             // setPreliminaryQuiz(true);
           })
           .catch((err) => {
