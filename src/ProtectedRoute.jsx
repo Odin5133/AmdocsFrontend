@@ -18,15 +18,18 @@ const ProtectedRoute = () => {
 
       try {
         // Verify the access token with the Djoser endpoint
-        await axios.post("http://127.0.0.1:8000/auth/jwt/verify/", {
-          token: access,
-        });
+        await axios.post(
+          "https://amdocs-backend.onrender.com/auth/jwt/verify/",
+          {
+            token: access,
+          }
+        );
         setIsAuthenticated(true);
       } catch (error) {
         try {
           // If access token is invalid, attempt to refresh it
           const response = await axios.post(
-            "http://127.0.0.1:8000/auth/jwt/refresh/",
+            "https://amdocs-backend.onrender.com/auth/jwt/refresh/",
             { refresh }
           );
           const newAccessToken = response.data.access;

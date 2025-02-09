@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const BASE_URL = "http://127.0.0.1:8000/chat/";
+const BASE_URL = "https://amdocs-backend.onrender.com/chat/";
 
 const createChat = async (
   message,
