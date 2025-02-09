@@ -4,7 +4,7 @@ import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 const QuizHistory = ({ scores }) => {
   return (
-    <div className="p-6 bg-gradient-to-br from-slate-900 to-indigo-900 rounded-2xl shadow-2xl max-w-4xl mx-auto max-h-[90vh] overflow-y-auto">
+    <div className="p-6 bg-gradient-to-br from-slate-900 to-indigo-900 rounded-2xl shadow-2xl mx-auto max-h-[90vh] overflow-y-auto">
       <motion.h2
         className="text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 text-center"
         initial={{ opacity: 0, y: -20 }}
