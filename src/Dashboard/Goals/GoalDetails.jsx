@@ -36,7 +36,7 @@ const GoalDetails = ({ goal, goalDetail, selectedGoal, moduleId }) => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log(err);
+        //console.log(err);
       });
   };
 

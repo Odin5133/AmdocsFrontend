@@ -11,7 +11,7 @@ const ProtectedRoute = () => {
   useEffect(() => {
     const verifyAccessToken = async () => {
       if (!access || !refresh) {
-        console.log("error: missing tokens");
+        //console.log("error: missing tokens");
         setIsAuthenticated(false);
         return;
       }
@@ -41,11 +41,11 @@ const ProtectedRoute = () => {
             });
             setIsAuthenticated(true);
           } else {
-            console.log("error: refresh token did not return new access token");
+            //console.log("error: refresh token did not return new access token");
             setIsAuthenticated(false);
           }
         } catch (refreshError) {
-          console.log("error: refreshing access token failed");
+          //console.log("error: refreshing access token failed");
           setIsAuthenticated(false);
         }
       }

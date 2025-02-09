@@ -34,7 +34,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   }, []);
 
   // useEffect(() => {
-  //   console.log(questions);
+  //   //console.log(questions);
   // });
 
   const handleAnswerSelect = (answer) => {
@@ -56,13 +56,13 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
       setIsTransitioning(false);
 
       if (currentQuestion + 1 < questions.length - 1) {
-        // console.log(currentQuestion + 1, questions.length);
+        // //console.log(currentQuestion + 1, questions.length);
         setCurrentQuestion(currentQuestion + 1);
         // setCurrentQuestion(questions.length - 1);
 
         setQuestionStartTime(Date.now());
       } else {
-        // console.log(currentQuestion + 1, questions.length);
+        // //console.log(currentQuestion + 1, questions.length);
 
         setQuizCompleted(true);
       }
@@ -70,7 +70,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   };
 
   useEffect(() => {
-    console.log(currentQuestion, questions.length);
+    //console.log(currentQuestion, questions.length);
   }, [currentQuestion]);
 
   const getButtonColor = (choice) => {
@@ -94,7 +94,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
     let correctTime = 0;
     let wrongTime = 0;
     questions.forEach((q, index) => {
-      // console.log(questionTimes[index]);
+      // //console.log(questionTimes[index]);
       if (selectedAnswers[index] === q.correctAnswer) {
         correct++;
         correctTime += questionTimes[index] || 0;
@@ -103,7 +103,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
         wrongTime += questionTimes[index] || 0;
       }
     });
-    // console.log(correct, wrong, correctTime, wrongTime);
+    // //console.log(correct, wrong, correctTime, wrongTime);
     return { correct, wrong, correctTime, wrongTime };
   };
 
@@ -121,8 +121,8 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   const handleSubmitQuiz = async (correct, wrong, correctTime, wrongTime) => {
     setIsLoading(true);
     //calculate right fluency
-    console.log(correct, quizCompleteTime, correctTime, questions.length);
-    console.log(wrong, quizCompleteTime, wrongTime, questions.length);
+    //console.log(correct, quizCompleteTime, correctTime, questions.length);
+    //console.log(wrong, quizCompleteTime, wrongTime, questions.length);
 
     const right_fluency =
       correctTime === 0 || isNaN(correctTime)
@@ -138,7 +138,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
             (wrong * quizCompleteTime) / (wrongTime * questions.length)
           );
 
-    console.log(right_fluency, wrong_fluency);
+    //console.log(right_fluency, wrong_fluency);
     let formdata = new FormData();
     formdata.append("right_fluency", right_fluency);
     formdata.append("wrong_fluency", wrong_fluency);
@@ -157,9 +157,9 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
           },
         }
       );
-      console.log(res.data);
+      //console.log(res.data);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     } finally {
       // setTimeout(10000);
       //add some time
@@ -177,10 +177,10 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
             }
           )
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           })
           .finally(() => {
             setIsLoading(false);
@@ -199,10 +199,10 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
             }
           )
           .then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           })
           .finally(() => {
             setIsLoading(false);
@@ -220,7 +220,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   };
 
   useEffect(() => {
-    console.log(quizCompleted);
+    //console.log(quizCompleted);
   }, [quizCompleted]);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -314,7 +314,7 @@ const Quiz = ({ questions = [], submitId, goal_id, typeOf, module }) => {
   }
 
   // useEffect(() => {
-  //   console.log(currentQ);
+  //   //console.log(currentQ);
   // }, [currentQ]);
 
   if (questions.length === 0) {

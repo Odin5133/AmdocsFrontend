@@ -14,7 +14,7 @@ function Hist() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setScores(res.data.results); // Set the fetched scores
       })
       .catch((err) => {

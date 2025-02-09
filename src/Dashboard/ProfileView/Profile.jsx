@@ -9,7 +9,7 @@ const Profile = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log(Cookies.get("access"));
+    //console.log(Cookies.get("access"));
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
@@ -23,7 +23,7 @@ const Profile = () => {
         setProfileData(response.data);
       } catch (err) {
         setError("Failed to fetch profile data");
-        console.log(err);
+        //console.log(err);
       } finally {
         setLoading(false);
       }

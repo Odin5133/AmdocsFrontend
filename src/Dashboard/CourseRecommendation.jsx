@@ -53,9 +53,9 @@ function CourseRecommendation() {
     fetchGoals();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedGoal);
-  }, [selectedGoal]);
+  // useEffect(() => {
+  //   //console.log(selectedGoal);
+  // }, [selectedGoal]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,10 +75,10 @@ function CourseRecommendation() {
         }
       );
       setRecommendations(response.data.course_list);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       setError("Failed to fetch recommendations. Please try again.");
-      console.log(error);
+      //console.log(error);
     } finally {
       setLoading((prev) => ({ ...prev, recommendations: false }));
     }

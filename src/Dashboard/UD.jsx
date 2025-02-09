@@ -62,7 +62,7 @@ function UD() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         // res.data.data.questions && setQuestions(res.data.data.questions);
 
         const data = keysToCamelCase(res.data);
@@ -88,7 +88,7 @@ function UD() {
               correctAnswer -= 1; // Convert 1-based index to 0-based
             }
 
-            console.log(correctAnswer);
+            //console.log(correctAnswer);
 
             // Ensure correct_answer is a valid index
             if (correctAnswer >= 0 && correctAnswer < options.length) {
@@ -100,12 +100,12 @@ function UD() {
         setQuestions(normalizedQuestions);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
   useEffect(() => {
-    console.log(questions);
+    //console.log(questions);
     // if questions correct answer==1 or a map it to the first option
   }, [questions]);
 

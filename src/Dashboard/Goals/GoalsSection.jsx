@@ -46,7 +46,7 @@ const GoalsSection = () => {
         }
       )
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (deletingGoalIndex !== null) {
           const newGoals = goals.filter((_, i) => i !== deletingGoalIndex);
           setGoals(newGoals);
@@ -58,7 +58,7 @@ const GoalsSection = () => {
           }
         }
       })
-      .catch((err) => console.log(err))
+      //.catch((err) => //console.log(err))
       .finally(() => setDeletingGoalIndex(null));
   };
 
@@ -89,7 +89,7 @@ const GoalsSection = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.results);
+        //console.log(res.data.results);
         // setGoals(res.data.results);
         // for each goal add random progress between 0 and 100 and currentmodule=""
         res.data.results.forEach((goal) => {
@@ -106,7 +106,7 @@ const GoalsSection = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -115,8 +115,8 @@ const GoalsSection = () => {
   }, []);
 
   useEffect(() => {
-    console.log(`Bearer ${Cookies.get("access")}`);
-    // console.log(goalDetail);
+    //console.log(`Bearer ${Cookies.get("access")}`);
+    // //console.log(goalDetail);
     if (selectedGoal === -1) {
       return;
     }
@@ -125,7 +125,7 @@ const GoalsSection = () => {
     formData.append("type_of_quiz", "A");
     formData.append("goal_id", goals[selectedGoal].id);
     formData.append("module_info", "Preliminary Test");
-    console.log(formData, curGoalId);
+    //console.log(formData, curGoalId);
     setIsLoading(true);
     setLoadx(true);
     axios
@@ -135,7 +135,7 @@ const GoalsSection = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
 
         if (res.data.data.is_attempted === false) {
           setPreliminaryQuiz(true);
@@ -159,21 +159,21 @@ const GoalsSection = () => {
               },
             })
             .then((res) => {
-              console.log(res.data);
+              //console.log(res.data);
               // setGoalDetail(res.data.data);
               setGoalDetail(res.data.data);
               setModuleId(res.data.id);
               setIsLoading(false);
 
-              // console.log(res.data.data);
+              // //console.log(res.data.data);
             })
             .catch((err) => {
-              console.log(err);
+              //console.log(err);
             });
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -186,7 +186,7 @@ const GoalsSection = () => {
   const handleTest = () => {
     // e.preventDefault();
     setIsLoading(true);
-    // console.log(info);
+    // //console.log(info);
     axios
       .post(
         "https://amdocs-backend.onrender.com/api/tests/",
@@ -203,7 +203,7 @@ const GoalsSection = () => {
       )
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data);
+        //console.log(res.data);
         navigate(
           `/dashboard/quiz/${res.data.data.id}/${goals[selectedGoal].id}/A/${moduleId}`
         );
@@ -213,7 +213,7 @@ const GoalsSection = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -228,7 +228,7 @@ const GoalsSection = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setIsLoading(true);
         setLoadx(true);
         axios
@@ -242,7 +242,7 @@ const GoalsSection = () => {
             }
           )
           .then((res) => {
-            console.log(res.data.results);
+            //console.log(res.data.results);
             // setGoals(res.data.results);
             // for each goal add random progress between 0 and 100 and currentmodule=""
             res.data.results.forEach((goal) => {
@@ -263,13 +263,13 @@ const GoalsSection = () => {
             // setPreliminaryQuiz(true);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           })
           .finally(() => {
             setIsLoading(false);
             setLoadx(false);
           });
-        // console.log(res.data);
+        // //console.log(res.data);
         // const newGoalEntry = {
         //   id: goals.length + 1,
         //   title: newGoal.title,
@@ -291,15 +291,15 @@ const GoalsSection = () => {
         // }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         if (err.response.status === 400)
           toast.error("Be more descriptive in your goal description");
       });
   };
 
   useEffect(() => {
-    console.log(goalDetail);
-    console.log(Object.keys(goalDetail).length);
+    //console.log(goalDetail);
+    //console.log(Object.keys(goalDetail).length);
   }, [goalDetail]);
 
   return (
