@@ -110,27 +110,9 @@ const Register = ({ onSwitch }) => {
     formdata.append("leetcode_url", leetcode || "");
     formdata.append("city", "Pune");
     formdata.append("college", "India");
-    // axios
-    //   .post("http://127.0.0.1:8000/auth/users/", formdata)
-    //   .then((res) => {
-    //     //  console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     axios
-      .post("http://127.0.0.1:8000/auth/users/", {
-        email: email,
-        password: password,
-        username: username,
-        first_name: firstName,
-        last_name: lastName,
-        linkedin_url: linkedin || "",
-        github_url: github || "",
-        leetcode_url: leetcode || "",
-        city: "Pune",
-        college: "India",
-      })
+      .post("https://amdocs-backend.onrender.com/auth/users/", formdata)
       .then((res) => {
         toast.success(
           "Account created successfully. Please log in with the account.",
