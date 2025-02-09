@@ -83,12 +83,12 @@ const Register = ({ onSwitch }) => {
   };
 
   useEffect(() => {
-    console.log(errors);
+    //console.log(errors);
   }, [errors]);
 
   const addMissingHTTPStoURL = (url) => {
     if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
-      console.log("Adding https:// to", url);
+      //console.log("Adding https:// to", url);
       return `https://${url}`;
     }
     return url;

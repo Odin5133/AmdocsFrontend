@@ -15,7 +15,7 @@ const createChat = async (
       ? { is_start: true, goal_title: goalTitle, goal_description: goalDesc }
       : { message };
 
-    console.log("Sending payload:", params); // Debugging: Log the params
+    //console.log("Sending payload:", params); // Debugging: Log the params
 
     // Use GET request with query parameters
     const response = await axios.get(BASE_URL, {
@@ -26,7 +26,7 @@ const createChat = async (
       },
     });
 
-    console.log("Response from backend:", response.data); // Debugging: Log the response
+    //console.log("Response from backend:", response.data); // Debugging: Log the response
     return response.data;
   } catch (error) {
     console.error("Error creating chat:", error);
@@ -50,7 +50,7 @@ const sendChatMessage = async (
       goal_desc: goalDesc,
     };
 
-    console.log("Sending message payload:", params); // Debugging: Log the params
+    //console.log("Sending message payload:", params); // Debugging: Log the params
 
     // Use GET request with query parameters
     const response = await axios.get(BASE_URL, {
@@ -61,7 +61,7 @@ const sendChatMessage = async (
       },
     });
 
-    console.log("Response from backend:", response.data); // Debugging: Log the response
+    //console.log("Response from backend:", response.data); // Debugging: Log the response
     return response.data;
   } catch (error) {
     console.error("Error sending message:", error);

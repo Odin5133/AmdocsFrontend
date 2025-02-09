@@ -72,7 +72,7 @@ const EditProfile = () => {
         setSuccess("Profile updated successfully");
         setTimeout(() => setSuccess(""), 3000);
       } catch (err) {
-        console.log(err);
+        //console.log(err);
         setError(err.response?.data?.message || "Failed to update profile");
         setTimeout(() => setError(""), 3000);
       }
