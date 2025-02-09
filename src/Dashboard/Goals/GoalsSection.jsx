@@ -77,6 +77,7 @@ const GoalsSection = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    setLoadx(true);
     axios
       .get(
         "https://amdocs-backend.onrender.com/api/goals/",
@@ -107,7 +108,10 @@ const GoalsSection = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        setLoadx(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -122,8 +126,8 @@ const GoalsSection = () => {
     formData.append("goal_id", goals[selectedGoal].id);
     formData.append("module_info", "Preliminary Test");
     console.log(formData, curGoalId);
-    // setIsLoading(true);
-    // setLoadx(true);
+    setIsLoading(true);
+    setLoadx(true);
     axios
       .post("https://amdocs-backend.onrender.com/api/tests/", formData, {
         headers: {
@@ -132,6 +136,7 @@ const GoalsSection = () => {
       })
       .then((res) => {
         console.log(res.data);
+
         if (res.data.data.is_attempted === false) {
           setPreliminaryQuiz(true);
           if (res.data.questions) {
@@ -172,7 +177,7 @@ const GoalsSection = () => {
       })
       .finally(() => {
         setIsLoading(false);
-        // setLoadx(false);
+        setLoadx(false);
       });
 
     // });

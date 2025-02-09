@@ -391,6 +391,42 @@ md:pt-28 pt-14"
               </div>
             </div>
           </div>
+
+          {/* Step 2 */}
+          <div className="flex md:flex-row flex-col-reverse items-center gap-8 md:pt-28 pt-14">
+            <div className="w-full md:w-1/2 flex justify-center">
+              <div className="bg-richblack-800 p-8 rounded-xl shadow-xl">
+                <TypeAnimation
+                  sequence={[
+                    " Graph Generation...",
+                    1000,
+                    " Skill Showcase... ",
+                    1000,
+                    " Gamified Environment!",
+                    1000,
+                  ]}
+                  repeat={Infinity}
+                  cursor={true}
+                  style={{
+                    whiteSpace: "pre-line",
+                    display: "block",
+                    fontSize: "1.25rem",
+                    color: "#FBBF24",
+                  }}
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2">
+              <h3 className="text-3xl font-semibold mb-4">
+                4. Knowledge Graph Generation
+              </h3>
+              <p className="text-richblack-300">
+                Personalised knowledge graph is created for each user showcasing
+                various skills and their level of expertise for each skill. This
+                can be easily shared with users to create a gamified environment
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -420,13 +456,13 @@ md:pt-28 pt-14"
           <FeatureCard
             icon={<FaCode />}
             title="Database"
-            description="PostgreSQL for structured data & Qdrant for vector search."
+            description="PostgreSQL for structured data ,Qdrant for vector search and Neo4j for personalised Knowledge Graph"
             gradient="bg-gradient-to-r from-orange-600 to-red-600"
           />
           <FeatureCard
             icon={<FaCode />}
             title="AI Models"
-            description="LLaMA & Mistral for cutting-edge NLP."
+            description="Deepseek & Mistral for cutting-edge NLP."
             gradient="bg-gradient-to-r from-purple-600 to-pink-600"
           />
         </div>
@@ -434,7 +470,7 @@ md:pt-28 pt-14"
 
       {/* Footer */}
       <footer className="bg-richblack-900 text-white py-8 text-center">
-        <p>© 2023 PathFinder AI. All rights reserved.</p>
+        <p>© 2025 PathFinder AI. All rights reserved.</p>
       </footer>
     </div>
   );
