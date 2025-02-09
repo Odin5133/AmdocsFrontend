@@ -16,6 +16,7 @@ const Hist = lazy(() => import("./Dashboard/Hist"));
 const CourseRecommendation = lazy(() =>
   import("./Dashboard/CourseRecommendation")
 );
+const NotFound = lazy(() => import("./NotFound")); // Import the NotFound component
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                 <Route path="edit-profile" element={<EditProfile />} />
               </Route>
             </Route>
+            <Route path="*" element={<NotFound />} /> {/* Add this line */}
           </Routes>
         </Suspense>
       </BrowserRouter>
