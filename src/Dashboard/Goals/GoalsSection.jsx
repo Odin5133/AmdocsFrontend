@@ -13,6 +13,7 @@ import { GiGhost, GiDirectionSigns } from "react-icons/gi";
 import toast from "react-hot-toast";
 import LoadingAnimation from "../Components/LoadingAnimation";
 import { useNavigate } from "react-router-dom";
+// import ProtectedRoute from "../../ProtectedRoute";
 
 const GoalsSection = () => {
   const [selectedGoal, setSelectedGoal] = useState(-1);
@@ -25,14 +26,7 @@ const GoalsSection = () => {
   const [moduleId, setModuleId] = useState(4);
   const [loadx, setLoadx] = useState(false);
 
-  const [goals, setGoals] = useState([
-    {
-      id: 1,
-      title: "Master React Development",
-      progress: 65,
-      currentModule: "Advanced Hooks Patterns",
-    },
-  ]);
+  const [goals, setGoals] = useState([]);
   const [goalDetail, setGoalDetail] = useState({});
   const [curGoalId, setCurGoalId] = useState(-1);
   const navigate = useNavigate();
@@ -335,7 +329,7 @@ const GoalsSection = () => {
       <div className="mt-4 md:mt-0 w-full md:px-4 md:w-[60%] md:h-[90vh]">
         {PreliminaryQuiz ? (
           <motion.div
-            className=" bg-blue-100 rounded-2xl shadow-lg md:mx-0 mx-2 p-6 flex flex-col items-center justify-center md:w-[60%] md:h-[90vh] min-h-[75vh]"
+            className=" bg-blue-100 rounded-2xl shadow-lg md:mx-0 mx-2 p-6 flex flex-col items-center justify-center md:w-full md:h-[90vh] min-h-[75vh]"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
