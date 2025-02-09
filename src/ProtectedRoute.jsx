@@ -51,14 +51,13 @@ const ProtectedRoute = () => {
     verifyAccessToken();
   }, [access, refresh]);
 
-  // While authentication is being verified, you might want to show a spinner or nothing.
+  useEffect(() => {
+    console.log(isAuthenticated);
+  }, [isAuthenticated]);
+
   if (isAuthenticated === null) return null;
 
-  return isAuthenticated ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/auth?mode=login" replace />
-  );
+  return !isAuthenticated && <Navigate to="/auth?mode=login" replace />;
 };
 
 export default ProtectedRoute;

@@ -12,6 +12,7 @@ import LandingPage from "./HomePage/Home";
 import Chatbot from "./chatbot/ChatBot";
 import Hist from "./Dashboard/Hist";
 import CourseRecommendation from "./Dashboard/CourseRecommendation";
+import NotFound from "./NotFound";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="edit-profile" element={<EditProfile />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -8,6 +8,8 @@ function Login({ onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGuestLoading, setIsGuestLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSwitchToRegister = () => {
@@ -19,6 +21,11 @@ function Login({ onSwitch }) {
   };
 
   const logind = (isGuest) => {
+    if (isGuest) {
+      setIsGuestLoading(true);
+    } else {
+      setIsLoading(true);
+    }
     const formData = new FormData();
     if (!isGuest) {
       formData.append("username", email);
@@ -27,11 +34,9 @@ function Login({ onSwitch }) {
       formData.append("username", import.meta.env.VITE_GUEST_USERNAME);
       formData.append("password", import.meta.env.VITE_GUEST_PASSWORD);
     }
-    console.log(import.meta.env.GUEST_USERNAME, password);
     axios
       .post("http://127.0.0.1:8000/auth/jwt/create", formData)
       .then((response) => {
-        console.log(response);
         Cookies.set("access", response.data.access, {
           secure: true,
           sameSite: "Strict",
@@ -44,26 +49,26 @@ function Login({ onSwitch }) {
         navigate("/dashboard/goals", { replace: true });
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 401) {
           toast.error(error.response.data.detail);
         } else {
-          console.log(error);
           toast.error("User Login Failed");
         }
         setEmail("");
         setPassword("");
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsGuestLoading(false);
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
     logind();
   };
 
   const handleGuestLogin = () => {
-    // Implement guest login logic here
     logind(1);
   };
 
@@ -121,8 +126,30 @@ function Login({ onSwitch }) {
         </div>
         <button
           type="submit"
-          className="bg-gradient-to-r from-purple-400 to-purple-500 rounded-xl text-white py-3 duration-300 shadow-lg transform hover:scale-101  "
+          className="bg-gradient-to-r from-purple-400 to-purple-500 rounded-xl text-white py-3 duration-300 shadow-lg transform hover:scale-101 flex items-center justify-center"
         >
+          {isLoading && (
+            <svg
+              className="animate-spin h-5 w-5 mr-3 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+          )}
           Login
         </button>
       </form>
@@ -134,9 +161,31 @@ function Login({ onSwitch }) {
       </div>
       <div className="mt-3 text-xs flex justify-center w-full items-center text-gray-600">
         <button
-          className="py-3 px-5 w-full bg-gradient-to-r from-gray-400 to-gray-600 text-white border rounded-xl hover:from-gray-500 hover:to-gray-700 duration-300 shadow-lg transform hover:scale-101"
+          className="py-3 px-5 w-full bg-gradient-to-r from-gray-400 to-gray-600 text-white border rounded-xl hover:from-gray-500 hover:to-gray-700 duration-300 shadow-lg transform hover:scale-101 flex items-center justify-center"
           onClick={handleGuestLogin}
         >
+          {isGuestLoading && (
+            <svg
+              className="animate-spin h-5 w-5 mr-3 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+          )}
           Sign In as Guest
         </button>
       </div>

@@ -28,6 +28,7 @@ const Register = ({ onSwitch }) => {
     firstName: false,
     lastName: false,
   });
+  const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,27 +95,13 @@ const Register = ({ onSwitch }) => {
   };
 
   const handleCreateAccount = () => {
-    // Add your form submission logic here
-    console.log("Creating account with:", {
-      email,
-      password,
-      username,
-      firstName,
-      lastName,
-      username,
-      linkedin,
-      github,
-      leetcode,
-      resume,
-    });
-
+    setIsRegistering(true);
     let formdata = new FormData();
     formdata.append("email", email);
     formdata.append("password", password);
     formdata.append("username", username);
     formdata.append("first_name", firstName);
     formdata.append("last_name", lastName);
-    //if linkedin is empty, appened temp.com
     formdata.append(
       "linkedin_url",
       linkedin ? addMissingHTTPStoURL(linkedin) : ""
@@ -123,31 +110,12 @@ const Register = ({ onSwitch }) => {
     formdata.append("leetcode_url", leetcode || "");
     formdata.append("city", "Pune");
     formdata.append("college", "India");
-    // axios
-    //   .post("http://127.0.0.1:8000/auth/users/", formdata)
-    //   .then((res) => {
-    //     //  console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     axios
-      .post("http://127.0.0.1:8000/auth/users/", {
-        email: email,
-        password: password,
-        username: username,
-        first_name: firstName,
-        last_name: lastName,
-        linkedin_url: linkedin || "",
-        github_url: github || "",
-        leetcode_url: leetcode || "",
-        city: "Pune",
-        college: "India",
-      })
+      .post("http://127.0.0.1:8000/auth/users/", formdata)
       .then((res) => {
-        console.log(res.data);
         toast.success(
-          "Account created successfully. Please activate account via email sent before logging in.",
+          "Account created successfully. Please log in with the account.",
           {
             duration: 6000,
           }
@@ -155,8 +123,10 @@ const Register = ({ onSwitch }) => {
         navigate("/auth?mode=login", { replace: true });
       })
       .catch((err) => {
-        console.log(err);
         toast.error("An error occurred. Please try again.");
+      })
+      .finally(() => {
+        setIsRegistering(false);
       });
   };
 
@@ -384,7 +354,7 @@ const Register = ({ onSwitch }) => {
         {renderFormContent()}
 
         <div className="flex justify-between items-center mt-4">
-          {step > 1 && (
+          {step > 1 && !isRegistering && (
             <button
               type="button"
               className="py-2 px-5 bg-gray-100 border rounded-xl hover:bg-blue-600 hover:text-white duration-300"
@@ -410,9 +380,33 @@ const Register = ({ onSwitch }) => {
           ) : (
             <button
               type="button"
-              className="py-2 px-3 rounded-xl bg-green-600 text-white hover:scale-105 duration-300"
+              className={`py-2 px-3 rounded-xl bg-green-600 text-white ${
+                isRegistering ? "" : "hover:scale-105"
+              } duration-300 flex items-center justify-center`}
               onClick={handleCreateAccount}
             >
+              {isRegistering && (
+                <svg
+                  className="animate-spin h-4 w-4 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+              )}
               Create Account
             </button>
           )}
@@ -428,7 +422,7 @@ const Register = ({ onSwitch }) => {
       <div className="mt-3 text-xs flex justify-between items-center text-gray-600">
         <p>Already a user?</p>
         <button
-          className="py-2 px-5 bg-gray-100 border rounded-xl hover:bg-blue-600 hover:text-white duration-300"
+          className="py-2 px-5 bg-gray-100 border rounded-xl hover:bg-purple-600 hover:text-white duration-300"
           onClick={handleSwitchToLogin}
         >
           Sign In
