@@ -6,7 +6,8 @@ This web application allows users to view a list of profiles and explore their g
 
 Watch the project in action:
 
-[![Project Showcase](https://youtu.be/te5uzYaNQn0)
+[![Project Showcase](https://img.youtube.com/vi/te5uzYaNQn0/0.jpg)](https://www.youtube.com/watch?v=te5uzYaNQn0)
+
 
 ## Prerequisites
 
